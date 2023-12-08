@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_spectacular',
     'rest_framework_simplejwt',
-    'authentication'
+    'authentication',
+    'thread'
 ]
 
 AUTH_USER_MODEL = "authentication.CustomUser"
