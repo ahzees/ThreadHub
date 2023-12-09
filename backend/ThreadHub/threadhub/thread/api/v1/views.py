@@ -84,5 +84,12 @@ class ViewMessagesThreadApiView(RetrieveAPIView):
 
 
 
-# class AddMessageThreadApiView(UpdateAPIView):
-#     queryset = Thread.objects.all()
+class AddMessageThreadApiView(UpdateAPIView):
+    queryset = Thread.objects.all()
+    serializer_class = MessageSerializer
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        message = Messages.objects.create(user=request.user, content=request.data['content'], thread=instance)
+        print(instance.messages.all())
+        return Response({"message": message.content})

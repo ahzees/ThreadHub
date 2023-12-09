@@ -29,3 +29,4 @@ class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Messages
         fields = ['user', 'content']
+        read_only_fields = ['user']
