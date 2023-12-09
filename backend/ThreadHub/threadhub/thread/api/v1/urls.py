@@ -1,10 +1,12 @@
 from django.urls import path
 
-from thread.api.v1.views import ThreadApiView, ViewThreadApi, AddMembersApiView
+from thread.api.v1.views import ThreadApiView, ViewThreadApiView, AddMembersApiView, ViewMessagesThreadApiView, ViewAllThreadApiView
 
 
 urlpatterns = [
     path('create/', ThreadApiView.as_view()),
-    path('view/<int:pk>', ViewThreadApi.as_view()),
-    path('add_members/<int:pk>', AddMembersApiView.as_view()),
+    path('all/', ViewAllThreadApiView.as_view()),
+    path('<int:pk>/view', ViewThreadApiView.as_view()),
+    path('<int:pk>/add_members', AddMembersApiView.as_view()),
+    path('<int:pk>/messages', ViewMessagesThreadApiView.as_view()),
 ]

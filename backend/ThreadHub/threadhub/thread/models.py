@@ -7,6 +7,6 @@ class Thread(models.Model):
     messages = models.ForeignKey("Messages", on_delete=models.DO_NOTHING, null=True, related_name="thread")
 
 class Messages(models.Model):
-    user = models.ForeignKey(Thread, on_delete=models.CASCADE, related_name="thread_user_messages", null=True)
+    user = models.ForeignKey(Thread, on_delete=models.CASCADE, related_name="thread_messages", null=True)
     content = models.TextField("content of message", null=False, blank=False, default="Hello")
     # Add other fields as needed

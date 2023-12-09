@@ -16,10 +16,16 @@ class CreateThreadSerializer(serializers.ModelSerializer):
 class ViewThreadSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Thread
-        fields = ['pk', 'name', 'members']
+        fields = ['pk', 'name', 'members', 'messages']
 
 
 class AddMembersSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Thread
         fields = ['members']
+
+
+class MessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Messages
+        fields = ['user', 'content']

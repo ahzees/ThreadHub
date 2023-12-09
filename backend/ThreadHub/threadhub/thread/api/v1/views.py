@@ -10,7 +10,7 @@ from drf_spectacular.utils import extend_schema, inline_serializer
 
 from authentication.permisions import IsMember
 from thread.models import Thread, Messages
-from thread.api.v1.serializers import CreateThreadSerializer, ViewThreadSerializer, AddMembersSerializer
+from thread.api.v1.serializers import CreateThreadSerializer, ViewThreadSerializer, AddMembersSerializer, MessageSerializer
 from authentication.models import CustomUser
 
 
@@ -38,11 +38,23 @@ class ThreadApiView(CreateAPIView):
                     status=status.HTTP_409_CONFLICT,
                 )
     
-class ViewThreadApi(RetrieveAPIView):
+class ViewThreadApiView(RetrieveAPIView):
     queryset = Thread.objects.all()
     serializer_class = ViewThreadSerializer
     permission_classes = [IsAuthenticated, IsMember]
 
+class ViewAllThreadApiView(ListAPIView):
+    queryset = Thread.objects.all()
+    serializer_class = ViewThreadSerializer
+    permission_classes = [IsAuthenticated,]
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset().filter(members__pk = request.user.pk)
+        serializer = self.get_serializer(data=queryset, many=True)
+        serializer.is_valid()
+        print(serializer.data)
+        return Response({"threads":serializer.data})
+    
 class AddMembersApiView(UpdateAPIView):
     queryset = Thread.objects.all()
     serializer_class = AddMembersSerializer
@@ -51,12 +63,26 @@ class AddMembersApiView(UpdateAPIView):
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
-        print(*request.data['members'])
         list_of_members = [CustomUser.objects.get(email=i).pk for i in request.data['members']]
         instance.members.add(*list_of_members)
         instance.save()
         return Response({*instance.members.all().values_list('email', flat=True)})
     
 
-class ViewMessagesThread(ListAPIView):
-    queryset = Messages.objects.all()
+class ViewMessagesThreadApiView(RetrieveAPIView):
+    queryset = Thread.objects.all()
+    serializer_class = MessageSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, pk):
+        queryset = self.get_queryset().get(pk=pk).messages
+        if queryset:
+            serializer = self.serializer_class(data=queryset.all(), many=True)
+            serializer.is_valid()
+            return Response({"messages": serializer.data})
+        return Response({"messages":"Empty"})
+
+
+
+# class AddMessageThreadApiView(UpdateAPIView):
+#     queryset = Thread.objects.all()
