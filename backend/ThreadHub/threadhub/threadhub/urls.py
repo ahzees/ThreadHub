@@ -20,7 +20,8 @@ from django.urls import path, include
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('auth', include('authentication.api.v1.urls')),
+    path('auth/', include('authentication.api.v1.urls')),
+    path('thread/', include('thread.api.v1.urls')),
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     # Optional UI:
     path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
