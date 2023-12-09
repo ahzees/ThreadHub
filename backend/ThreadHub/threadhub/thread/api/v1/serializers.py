@@ -1,9 +1,8 @@
 from rest_framework import serializers
 
 from thread import models
-from authentication.api.v1.serializers import CustomUserSerializer
-
-class ThreadSerializer(serializers.ModelSerializer):
+from authentication.api.v1.serializers import AddCustomUserSerializer
+class CreateThreadSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = models.Thread
@@ -14,3 +13,13 @@ class ThreadSerializer(serializers.ModelSerializer):
         return models.Thread.objects.create(**validated_data)
     
 
+class ViewThreadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Thread
+        fields = ['pk', 'name', 'members']
+
+
+class AddMembersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Thread
+        fields = ['members']
