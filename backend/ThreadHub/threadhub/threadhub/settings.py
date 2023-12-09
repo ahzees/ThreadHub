@@ -29,7 +29,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -84,6 +84,25 @@ WSGI_APPLICATION = 'threadhub.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+
+#     'default': {
+
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+
+#         'NAME': os.environ["DB_NAME"],
+
+#         'USER': os.environ["DB_USER"],
+
+#         'PASSWORD': os.environ["DB_PASSWORD"],
+
+#         'HOST': os.environ["DB_HOST"],
+
+#         'PORT': "",
+
+#     }
+
+# }
 DATABASES = {
 
     'default': {
@@ -98,12 +117,11 @@ DATABASES = {
 
         'HOST': os.environ["DB_HOST"],
 
-        'PORT': "",
+        'PORT': os.environ["DB_PORT"],
 
     }
 
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-pa5432ssword-validators
