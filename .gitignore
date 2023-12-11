@@ -1,7 +1,5 @@
 /*/**/.python-version
 .python-version
-.env
-/*/**/.env
 __pycache__
 migrations
 /*/**/migrations
