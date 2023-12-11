@@ -63,7 +63,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://0.0.0.0:3003",  # URL вашого React додатку
+    "http://0.0.0.0:3000",  # URL вашого React додатку
 ]
 
 ROOT_URLCONF = 'threadhub.urls'
