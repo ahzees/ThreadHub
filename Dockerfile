@@ -16,4 +16,6 @@ RUN poetry config virtualenvs.create false
 RUN poetry install
 
 
-CMD ["ls"]
+EXPOSE 8000
+
+CMD ["python", "threadhub/manage.py", "runserver"]
