@@ -63,6 +63,10 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://threadhub'
+]
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3001",  # URL вашого React додатку
 ]
