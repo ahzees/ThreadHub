@@ -16,6 +16,7 @@ RUN poetry config virtualenvs.create false
 RUN poetry install
 
 
-EXPOSE 8000
+EXPOSE 8080
 
-CMD ["python", "threadhub/manage.py", "runserver"]
+ENTRYPOINT ["python", "threadhub/manage.py"]
+CMD ["runserver", "0.0.0.0:8080"]
