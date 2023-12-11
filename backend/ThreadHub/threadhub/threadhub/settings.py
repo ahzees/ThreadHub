@@ -53,6 +53,7 @@ AUTH_USER_MODEL = "authentication.CustomUser"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -63,7 +64,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://0.0.0.0:3000",  # URL вашого React додатку
+    "http://localhost:3001",  # URL вашого React додатку
 ]
 
 ROOT_URLCONF = 'threadhub.urls'
@@ -159,8 +160,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = 'static/'
-
 
 
 REST_FRAMEWORK = {
@@ -218,3 +217,14 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
+
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+
+STATIC_URL = 'static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static")
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
