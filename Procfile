@@ -1,1 +1,1 @@
-web: gunicorn threadhub.wsgi
+web: python manage.py migrate && gunicorn threadhub.wsgi
