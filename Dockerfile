@@ -16,4 +16,4 @@ RUN poetry config virtualenvs.create false
 RUN poetry install
 
 
-CMD ["threadhub/start.sh"]
+CMD ["ls | cd threadhub | ls | start.sh"]
