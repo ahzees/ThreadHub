@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.db.utils import IntegrityError
 from rest_framework import status
 from rest_framework import serializers
-from rest_framework.generics import CreateAPIView, UpdateAPIView, ListAPIView, RetrieveAPIView
+from rest_framework.generics import CreateAPIView, UpdateAPIView, ListAPIView, RetrieveAPIView, DestroyAPIView
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -43,6 +43,11 @@ class ViewThreadApiView(RetrieveAPIView):
     serializer_class = ViewThreadSerializer
     permission_classes = [IsAuthenticated, IsMember]
 
+class DeleteThreadApiView(DestroyAPIView):
+    queryset = Thread.objects.all()
+    serializer_class = ViewThreadSerializer
+    permission_classes = [IsAuthenticated, IsMember]
+
 class ViewAllThreadApiView(ListAPIView):
     queryset = Thread.objects.all()
     serializer_class = ViewThreadSerializer
@@ -52,7 +57,6 @@ class ViewAllThreadApiView(ListAPIView):
         queryset = self.get_queryset().filter(members__pk = request.user.pk)
         serializer = self.get_serializer(data=queryset, many=True)
         serializer.is_valid()
-        print(serializer.data)
         return Response({"threads":serializer.data})
     
 class AddMembersApiView(UpdateAPIView):
@@ -91,5 +95,4 @@ class AddMessageThreadApiView(UpdateAPIView):
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
         message = Messages.objects.create(user=request.user, content=request.data['content'], thread=instance)
-        print(instance.messages.all())
         return Response({"message": message.content})
